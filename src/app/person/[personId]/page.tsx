@@ -2,7 +2,10 @@ import dynamic from 'next/dynamic'
 import { Metadata } from 'next'
 // const DynamicLayout = dynamic(() => import('@/components/Layout'))
 const DinamicInformationPage = dynamic(
-  () => import('@/page/InformationPersonForm'),
+  () => import('@/page/InformationPersonForm/InformationPersonContainer'),
+  {
+    loading: () => <>carregando...</>,
+  },
 )
 
 export const metadata: Metadata = {
@@ -10,6 +13,6 @@ export const metadata: Metadata = {
   description: 'Formulário de cadastro de pessoa.',
 }
 
-export default function Contact() {
+export default function PersonForm() {
   return <DinamicInformationPage />
 }

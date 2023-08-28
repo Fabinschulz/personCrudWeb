@@ -1,6 +1,9 @@
 {
   "extends": [
-    "@rocketseat/eslint-config/next", 
+    "@rocketseat/eslint-config/next",
     "next/core-web-vitals"
-  ]
+  ],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off"
+  }
 }

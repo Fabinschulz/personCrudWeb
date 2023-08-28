@@ -25,7 +25,6 @@ export const tableHeaderCellStyle: SxProps = {
 export const personListContainerStyle: SxProps = {
   overflowX: 'auto',
   width: '100%',
-  marginTop: '30px',
 }
 
 export const personListTableStyle: SxProps = {

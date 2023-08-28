@@ -1,31 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
-import { FieldError } from 'react-hook-form'
+import React, { ComponentProps } from 'react'
+import { FieldValues } from 'react-hook-form'
 
-type TextFormFieldProps = {
+type TextFormFieldProps = ComponentProps<'input'> & {
   name: string
   label: string
-  type?: string
-  placeholder?: string
-  required?: boolean
-  errors: FieldError | undefined
+  errors: FieldValues
   register: any
-  message: string
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const TextFormField = (props: TextFormFieldProps) => {
-  const {
-    name,
-    label,
-    required,
-    register,
-    errors,
-    message,
-    type,
-    placeholder,
-    onChange,
-  } = props
+export function resolve(path: string, obj: Record<string, any>): any {
+  const properties = path.split('.')
+  return properties.reduce((previousValue, currentValue) => {
+    if (previousValue && typeof previousValue === 'object') {
+      return previousValue[currentValue]
+    }
+    return undefined
+  }, obj)
+}
+
+const TextFormField: React.FC<TextFormFieldProps> = ({
+  name,
+  label,
+  required,
+  register,
+  errors,
+  onChange,
+  ...props
+}) => {
+  const error = errors && resolve(name, errors)?.message
 
   return (
     <>
@@ -36,20 +39,19 @@ const TextFormField = (props: TextFormFieldProps) => {
         {`${label} ${required ? '*' : ''}`}
       </label>
       <input
+        {...props}
         {...register(name)}
-        className={`block w-full appearance-none border-[3px] text-zinc-700 ${
-          errors
+        className={`block w-full appearance-none border-[2px] text-zinc-700 ${
+          error
             ? 'border-red-500 focus:border-sky-500 focus:shadow-sm'
-            : 'border-sky-500 focus:shadow-sm focus:shadow-cyan-500'
+            : 'border-zinc-500 focus:border-sky-500 focus:shadow-sm'
         } mb-2 rounded px-4 py-3 leading-tight focus:outline-none 
                 `}
         id={`input-${name}`}
-        type={type}
-        placeholder={placeholder}
         onChange={onChange}
-        name={name}
+        required={false}
       />
-      <p className="text-xs italic text-red-500">{message}</p>
+      {error && <p className="text-xs italic text-red-500">{error}</p>}
     </>
   )
 }
