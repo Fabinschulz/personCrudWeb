@@ -26,8 +26,12 @@ import { PersonListProps } from './PersonList.type'
 import React, { FC, useState } from 'react'
 import Modal from '@/app/components/Modal'
 
-const DataTablePersonList: FC<PersonListProps> = ({ rowData }) => {
+const DataTablePersonList: FC<PersonListProps> = ({
+  rowData,
+  handleDelete,
+}) => {
   const [open, setOpen] = useState(false)
+  const [personId, setPersonId] = useState('')
   const headers = {
     name: 'Nome',
     cpf: 'CPF',
@@ -55,14 +59,17 @@ const DataTablePersonList: FC<PersonListProps> = ({ rowData }) => {
         onClose={closeModal}
         sizeModal="large"
         children={
-          <div className="flex justify-end space-x-4">
+          <div className=" my-5 flex justify-end space-x-4">
             <button
               onClick={closeModal}
-              className="rounded-md border px-4 py-2"
+              className="rounded-md border border-sky-300 px-4 py-2 text-sky-400"
             >
               Cancelar
             </button>
-            <button className="rounded-md bg-blue-500 px-4 py-2 text-white">
+            <button
+              className="rounded-md bg-blue-500 px-4 py-2 text-white"
+              onClick={() => handleDelete(personId)}
+            >
               Confirmar
             </button>
           </div>
@@ -103,12 +110,17 @@ const DataTablePersonList: FC<PersonListProps> = ({ rowData }) => {
                         marginLeft: '-4px',
                       }}
                     >
-                      <Link href={`person/${row.id}`}>
+                      <Link href={`person/${row.personId}`}>
                         <IconButton>
                           <TbEdit sx={{ height: 20, width: 20 }} />
                         </IconButton>
                       </Link>
-                      <IconButton onClick={() => setOpen(true)}>
+                      <IconButton
+                        onClick={() => {
+                          setOpen(true)
+                          setPersonId(row.personId)
+                        }}
+                      >
                         <RiDeleteBin6Line sx={{ height: 20, width: 20 }} />
                       </IconButton>
                     </Stack>

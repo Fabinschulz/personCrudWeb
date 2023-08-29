@@ -1,12 +1,6 @@
-export type PersonList = {
-  id: number
-  name: string
-  cpf: string
-  phoneNumber: string
-  email: string
-  birthDate: string
-}
+import { IPersonFull } from '@/service/person/person.interface'
 
 export type PersonListProps = {
-  rowData: PersonList[]
+  rowData: IPersonFull[]
+  handleDelete: (personId: string) => void
 }

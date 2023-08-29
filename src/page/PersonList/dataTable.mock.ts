@@ -1,6 +1,6 @@
 export const mockDataPerson = [
   {
-    id: 1,
+    personId: 1,
     name: 'João da Silva',
     cpf: '123.456.789-00',
     phoneNumber: '(11) 98765-4321',
@@ -8,7 +8,7 @@ export const mockDataPerson = [
     birthDate: '1990-01-01',
   },
   {
-    id: 2,
+    personId: 2,
     name: 'Maria Souza',
     cpf: '987.654.321-00',
     phoneNumber: '(21) 98765-4321',
@@ -16,7 +16,7 @@ export const mockDataPerson = [
     birthDate: '1985-05-15',
   },
   {
-    id: 3,
+    personId: 3,
     name: 'Pedro Oliveira',
     cpf: '555.444.333-00',
     phoneNumber: '(31) 55555-5555',
@@ -24,7 +24,7 @@ export const mockDataPerson = [
     birthDate: '1998-09-22',
   },
   {
-    id: 4,
+    personId: 4,
     name: 'Ana Santos',
     cpf: '777.888.999-00',
     phoneNumber: '(41) 77777-7777',
@@ -32,7 +32,7 @@ export const mockDataPerson = [
     birthDate: '1982-03-10',
   },
   {
-    id: 5,
+    personId: 5,
     name: 'Lucas Pereira',
     cpf: '222.333.444-00',
     phoneNumber: '(51) 22222-2222',

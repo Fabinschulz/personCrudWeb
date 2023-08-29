@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import { Metadata } from 'next'
+
 // const DynamicLayout = dynamic(() => import('@/components/Layout'))
 const DinamicInformationPage = dynamic(
   () => import('@/page/InformationPersonForm/InformationPersonContainer'),
@@ -13,6 +14,13 @@ export const metadata: Metadata = {
   description: 'Formulário de cadastro de pessoa.',
 }
 
-export default function PersonForm() {
-  return <DinamicInformationPage />
+interface IPersonFormProps {
+  params: {
+    personId?: string
+  }
+}
+
+export default function PersonForm({ params }: IPersonFormProps) {
+  const { personId } = params
+  return <DinamicInformationPage personId={personId} />
 }
