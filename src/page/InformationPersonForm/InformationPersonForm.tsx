@@ -30,7 +30,16 @@ const InformationPersonForm = ({ setValue, ...props }: IPersonFormProps) => {
               label="CPF"
               placeholder="Digite seu CPF"
               type="text"
-              required
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                const { value } = event.target
+                const cpf = value.replace(/\D/g, '')
+
+                const maskedCpf = cpf.replace(
+                  /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                  '$1.$2.$3-$4',
+                )
+                event.target.value = maskedCpf
+              }}
               {...props}
             />
           </div>
@@ -47,7 +56,7 @@ const InformationPersonForm = ({ setValue, ...props }: IPersonFormProps) => {
           <div className="w-full">
             <TextFormField
               name="birthDate"
-              label="Data de Nascimento"
+              label="Data de nascimento"
               placeholder="dd/mm/aaaa"
               type="date"
               required

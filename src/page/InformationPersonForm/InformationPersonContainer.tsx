@@ -86,6 +86,7 @@ export default function InformationPersonContainer({ personId }: Props) {
               <h1 className="text-xl font-bold md:text-4xl">Informações</h1>
               <div className="mt-4 flex items-center justify-between md:mt-6 md:justify-start">
                 <button
+                  data-cy="btn-back"
                   type="button"
                   className="mr-4 rounded-lg border border-[#081b29] bg-[#081b29] px-5 py-2 font-bold text-sky-200 hover:border-sky-500 hover:bg-transparent hover:text-sky-500 md:px-8 md:py-3"
                 >
@@ -95,6 +96,7 @@ export default function InformationPersonContainer({ personId }: Props) {
                   </a>
                 </button>
                 <button
+                  data-cy="btn-save"
                   type="submit"
                   className="rounded-lg border border-[#081b29] bg-[#081b29] px-6 py-2 font-bold text-sky-200 hover:border-sky-500 hover:bg-transparent hover:text-sky-500 md:px-10 md:py-3"
                 >

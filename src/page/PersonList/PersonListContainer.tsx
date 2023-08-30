@@ -60,6 +60,7 @@ export default function PersonListContainer() {
             <h1 className="text-2xl font-bold md:text-4xl">Pessoas</h1>
             <div className="mt-4 flex flex-col items-center justify-center md:flex-row md:justify-start">
               <button
+                data-cy="btn-refresh"
                 onClick={() => refetch()}
                 type="button"
                 className="mb-2 mr-0 rounded-lg border border-[#081b29] bg-[#081b29] px-6 py-2 font-bold text-sky-200 hover:border-sky-500 hover:bg-transparent hover:text-sky-500 md:mb-0 md:mr-4 md:px-10 md:py-3"
@@ -68,6 +69,7 @@ export default function PersonListContainer() {
               </button>
               <Link href="/person/new">
                 <button
+                  data-cy="btn-new-person"
                   type="button"
                   className="rounded-lg border border-sky-300 px-6 py-2 font-bold text-sky-300 hover:border-sky-500 hover:bg-transparent hover:text-sky-500 md:px-10 md:py-3"
                 >

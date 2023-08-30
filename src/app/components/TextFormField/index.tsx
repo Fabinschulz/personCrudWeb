@@ -41,6 +41,7 @@ const TextFormField: React.FC<TextFormFieldProps> = ({
       <input
         {...props}
         {...register(name)}
+        data-cy={name}
         className={`block w-full appearance-none border-[2px] text-zinc-700 ${
           error
             ? 'border-red-500 focus:border-sky-500 focus:shadow-sm'

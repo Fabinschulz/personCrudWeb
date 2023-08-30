@@ -42,7 +42,7 @@ const DataTablePersonList: FC<PersonListProps> = ({
     cpf: 'CPF',
     email: 'Email',
     phoneNumber: 'Telefone',
-    birthDate: 'Data de Nascimento',
+    birthDate: 'Data de nascimento',
     actions: 'Ações',
   }
 
