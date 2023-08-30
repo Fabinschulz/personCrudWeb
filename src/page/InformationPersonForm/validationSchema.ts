@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-import { object, string, InferType } from 'yup'
+import { object, string, InferType, date } from 'yup'
 
 export function validationSchemaPersonForm() {
   return object().shape({
@@ -10,11 +10,11 @@ export function validationSchemaPersonForm() {
         'Nome precisa conter apenas letras alfabéticas',
       ),
     registrationNumber: string()
-      .required('Número de registro é obrigatório')
       .matches(
         /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/,
         'Número de registro inválido. Ex: 000.000.000-00',
-      ),
+      )
+      .nullable(),
     email: string()
       .email('E-mail inválido')
       .required('Email: Precisa ser preenchido')
@@ -27,26 +27,21 @@ export function validationSchemaPersonForm() {
 
         return false
       }),
-    phoneNumber: string().required('Telefone é obrigatório'),
+    birthDate: date()
+      .required('Data de nascimento: Precisa ser preenchido.')
+      .typeError('Data de nascimento é obrigatória.')
+      .max(
+        new Date(),
+        'A data de nascimento não pode ser maior que a data atual.',
+      ),
+    phoneNumber: string().nullable(),
     address: object().shape({
-      addressName: string()
-        .typeError('Endereço inválido.')
-        .required('Endereço: Precisa ser preenchido.'),
-      zipCode: string()
-        .typeError('CEP inválido.')
-        .required('CEP: Precisa ser preenchido.'),
-      city: string()
-        .typeError('Cidade inválida.')
-        .required('Cidade: Precisa ser preenchido.'),
-      uf: string()
-        .typeError('UF inválida.')
-        .required('UF: Precisa ser preenchido.'),
-      district: string()
-        .typeError('Bairro inválido.')
-        .required('Bairro: Precisa ser preenchido.'),
-      number: string()
-        .typeError('Valor precisa ser um número.')
-        .required('Número: Precisa ser preenchido.'),
+      addressName: string().typeError('Endereço inválido.').nullable(),
+      zipCode: string().typeError('CEP inválido.').nullable(),
+      city: string().typeError('Cidade inválida.').nullable(),
+      uf: string().typeError('UF inválida.').nullable(),
+      district: string().typeError('Bairro inválido.').nullable(),
+      number: string().typeError('Valor precisa ser um número.').nullable(),
       complement: string().nullable(),
     }),
   })
@@ -69,4 +64,5 @@ export const defaultValuesPersonForm = {
     number: '',
     complement: '',
   },
+  birthDate: null,
 }

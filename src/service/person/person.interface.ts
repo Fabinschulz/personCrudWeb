@@ -25,4 +25,5 @@ export interface IPersonFull {
   email: string
   phoneNumber: string
   address: Address[]
+  birthDate: Date
 }

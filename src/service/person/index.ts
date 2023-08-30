@@ -29,7 +29,6 @@ export async function editOrCreate(data: PersonFormSchema, personId: string) {
     ...data,
     registrationNumber: data?.registrationNumber?.replace(onlyNumbers, ''),
     phoneNumber: data?.phoneNumber?.replace(onlyNumbers, ''),
-    'address.zipCode': data?.address?.zipCode?.replace(onlyNumbers, ''),
   }
 
   const axiosConfig = {

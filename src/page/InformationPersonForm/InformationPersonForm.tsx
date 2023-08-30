@@ -1,14 +1,16 @@
-import { FieldValues } from 'react-hook-form'
+import { FieldValues, UseFormSetValue } from 'react-hook-form'
 import TextFormField from '@/app/components/TextFormField'
 import SelectFormField from '@/app/components/SelectFormField'
 import { UF } from '@/service/zipCode/zipcode.types'
+import { queryZipCodeForm } from '@/service/zipCode'
 
-interface InfPersonFormProps {
+interface IPersonFormProps {
   register: any
   errors: FieldValues
+  setValue: UseFormSetValue<any>
 }
 
-const InformationPersonForm: React.FC<InfPersonFormProps> = ({ ...props }) => {
+const InformationPersonForm = ({ setValue, ...props }: IPersonFormProps) => {
   return (
     <>
       <div className="flex flex-col">
@@ -27,8 +29,8 @@ const InformationPersonForm: React.FC<InfPersonFormProps> = ({ ...props }) => {
               name="registrationNumber"
               label="CPF"
               placeholder="Digite seu CPF"
-              required
               type="text"
+              required
               {...props}
             />
           </div>
@@ -44,10 +46,19 @@ const InformationPersonForm: React.FC<InfPersonFormProps> = ({ ...props }) => {
           </div>
           <div className="w-full">
             <TextFormField
+              name="birthDate"
+              label="Data de Nascimento"
+              placeholder="dd/mm/aaaa"
+              type="date"
+              required
+              {...props}
+            />
+          </div>
+          <div className="w-full">
+            <TextFormField
               name="phoneNumber"
               label="Telefone Celular"
               placeholder="(xx) xxxxx-xxxx"
-              required
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 const { value } = event.target
                 const phoneNumber = value
@@ -66,8 +77,24 @@ const InformationPersonForm: React.FC<InfPersonFormProps> = ({ ...props }) => {
               name="address.zipCode"
               label="CEP"
               placeholder="00000-000"
-              required
-              type="number"
+              type="text"
+              maxLength={9}
+              onChange={(event) => {
+                const { value } = event.target
+                const zipcode = value.replace(/\D/g, '')
+
+                const maskedZipCode = zipcode.replace(
+                  /(\d{5})(\d{0,3})/,
+                  '$1-$2',
+                )
+                event.target.value = maskedZipCode
+
+                if (zipcode.length === 8) {
+                  queryZipCodeForm(zipcode, (fieldName, value) => {
+                    setValue(`address.${fieldName}`, value)
+                  })
+                }
+              }}
               {...props}
             />
           </div>
@@ -75,7 +102,6 @@ const InformationPersonForm: React.FC<InfPersonFormProps> = ({ ...props }) => {
             <TextFormField
               name="address.addressName"
               label="Endereço"
-              required
               {...props}
             />
           </div>
@@ -83,8 +109,8 @@ const InformationPersonForm: React.FC<InfPersonFormProps> = ({ ...props }) => {
             <TextFormField
               name="address.number"
               label="Número"
-              required
               type="number"
+              min={0}
               {...props}
             />
           </div>
@@ -96,27 +122,16 @@ const InformationPersonForm: React.FC<InfPersonFormProps> = ({ ...props }) => {
             />
           </div>
           <div className="w-full">
-            <TextFormField
-              name="address.district"
-              label="Bairro"
-              required
-              {...props}
-            />
+            <TextFormField name="address.district" label="Bairro" {...props} />
           </div>
           <div className="w-full">
-            <TextFormField
-              name="address.city"
-              label="Cidade"
-              required
-              {...props}
-            />
+            <TextFormField name="address.city" label="Cidade" {...props} />
           </div>
           <div className="w-full">
             <SelectFormField
               options={UF}
               name="address.uf"
               label="UF"
-              required
               {...props}
             />
           </div>

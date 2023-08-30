@@ -8,8 +8,11 @@ const clearAddressValues = (setFieldValue: ClearValueType) => {
   setFieldValue('uf', null)
 }
 
-const queryZipCode = (zipCode: string): Promise<ZipCodeData> =>
-  fetch(`https://viacep.com.br/ws/${zipCode}/json/`).then((res) => res.json())
+const queryZipCode = (zipCode: string): Promise<ZipCodeData> => {
+  return fetch(`https://viacep.com.br/ws/${zipCode}/json/`).then((res) =>
+    res.json(),
+  )
+}
 
 export const queryZipCodeForm = (
   zipCode: string,

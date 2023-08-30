@@ -1,6 +1,5 @@
 /* eslint-disable react/no-children-prop */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-'use client'
+import React, { FC, useState } from 'react'
 import {
   Paper,
   Table,
@@ -12,6 +11,9 @@ import {
   Grid,
   Stack,
   IconButton,
+  Select,
+  MenuItem,
+  Pagination,
 } from '@mui/material'
 import Link from 'next/link'
 import { RiDeleteBin6Line } from 'react-icons/ri'
@@ -23,15 +25,18 @@ import {
   tableHeaderCellStyle,
 } from './PersonList.styled'
 import { PersonListProps } from './PersonList.type'
-import React, { FC, useState } from 'react'
 import Modal from '@/app/components/Modal'
 
 const DataTablePersonList: FC<PersonListProps> = ({
   rowData,
   handleDelete,
+  openModal,
+  setOpenModal,
 }) => {
-  const [open, setOpen] = useState(false)
   const [personId, setPersonId] = useState('')
+  const [page, setPage] = useState(1)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+
   const headers = {
     name: 'Nome',
     cpf: 'CPF',
@@ -48,14 +53,27 @@ const DataTablePersonList: FC<PersonListProps> = ({
     </TableCell>
   )
 
-  const closeModal = () => setOpen(false)
+  const closeModal = () => setOpenModal(false)
+
+  const startIndex = (page - 1) * rowsPerPage
+  const endIndex = startIndex + rowsPerPage
+  const paginatedData = rowData?.slice(startIndex, endIndex)
+
+  const handleChangePage = (_: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value)
+  }
+
+  const handleChangeRowsPerPage = (value: number) => {
+    setRowsPerPage(value)
+    setPage(1)
+  }
 
   return (
     <React.Fragment>
       <Modal
         title="Tem certeza que deseja excluir o registro?"
         description="Ao confirmar, o registro será excluído permanentemente."
-        open={open}
+        open={openModal}
         onClose={closeModal}
         sizeModal="large"
         children={
@@ -92,7 +110,7 @@ const DataTablePersonList: FC<PersonListProps> = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {rowData?.map((row, index) => (
+              {paginatedData?.map((row, index) => (
                 <TableRow key={index}>
                   {renderCell(row, 'name')}
                   {renderCell(row, 'cpf')}
@@ -117,7 +135,7 @@ const DataTablePersonList: FC<PersonListProps> = ({
                       </Link>
                       <IconButton
                         onClick={() => {
-                          setOpen(true)
+                          setOpenModal(true)
                           setPersonId(row.personId)
                         }}
                       >
@@ -130,10 +148,30 @@ const DataTablePersonList: FC<PersonListProps> = ({
               <TableRow>
                 <TableCell
                   sx={{ ...tableHeaderCellStyle, pr: 5 }}
-                  colSpan={6}
+                  colSpan={5}
                   align="right"
                 >
-                  Total de registros: {rowData?.length}
+                  row page:
+                  <Select
+                    className="ml-2 h-8 rounded-md border border-gray-300"
+                    size="small"
+                    value={rowsPerPage}
+                    onChange={(event) =>
+                      handleChangeRowsPerPage(event.target.value as number)
+                    }
+                  >
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                  </Select>
+                </TableCell>
+                <TableCell sx={tableHeaderCellStyle} colSpan={6} align="right">
+                  <Pagination
+                    count={Math.ceil(rowData?.length / rowsPerPage)}
+                    page={page}
+                    onChange={handleChangePage}
+                    shape="rounded"
+                  />
                 </TableCell>
               </TableRow>
             </TableBody>
