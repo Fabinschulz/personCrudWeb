@@ -1,11 +1,6 @@
 /** @type {import("tailwindcss").Config} */
 module.exports = {
-  purge: ['./src/**/*.{ts,tsx}'],
-  content: [
-    './src/pages/**/*.{ts,tsx,mdx}',
-    './src/app/src/components/**/*.{ts,tsx,mdx}',
-    './src/app/**/*.{ts,tsx,mdx}',
-  ],
+  content: ['./src/**/*.{ts,tsx}'],
   presets: [],
   darkMode: 'media', // or "class"
   theme: {

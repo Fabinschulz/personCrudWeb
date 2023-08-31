@@ -130,7 +130,7 @@ const DataTablePersonList: FC<PersonListProps> = ({
                     >
                       <Link href={`person/${row.personId}`}>
                         <IconButton>
-                          <TbEdit sx={{ height: 20, width: 20 }} />
+                          <TbEdit style={{ height: 20, width: 20 }} />
                         </IconButton>
                       </Link>
                       <IconButton
@@ -139,7 +139,7 @@ const DataTablePersonList: FC<PersonListProps> = ({
                           setPersonId(row.personId)
                         }}
                       >
-                        <RiDeleteBin6Line sx={{ height: 20, width: 20 }} />
+                        <RiDeleteBin6Line style={{ height: 20, width: 20 }} />
                       </IconButton>
                     </Stack>
                   </TableCell>
