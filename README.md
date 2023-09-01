@@ -71,6 +71,10 @@ Você pode começar a editar a página ao modificar `app/page.tsx`. A página at
 
 Este projeto utiliza  [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) para otimizar e carregar automaticamente a fonte Inter, uma fonte personalizada do Google.
 
+## Arquiteturas:
+- Arquitetura completa com preocupações de separação de responsabilidade, SOLID e Clean Code.
+- Test Driven Development - TDD.
+
 ## Deploy on Vercel
 
 ---
